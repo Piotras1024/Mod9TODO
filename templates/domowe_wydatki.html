@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tu tworzymy domowe_wydatki i widzimy listę</title>
+    <style>
+        table, th, tr, td {border: 1px solid black;}
+    </style>
+</head>
+
+<h2>Lista Zakupów</h2>
+
+<table>
+    <thead>
+    <th>Nazwa produktu</th>
+    <th>Opis produktu</th>
+    <th>Zakupione ?</th>
+    </thead>
+{% for domowe_wydatki in domowe_wydatki %}
+    <tr>
+        <td><a href="/domowe_wydatki/{{ loop.index }}">{{ domowe_wydatki.nazwa_produktu }}</a></td>
+        <td>{{ domowe_wydatki.opis }}</td>
+        <td>{{ domowe_wydatki.zrealizowane }}</td>
+    </tr>
+{% endfor %}
+</table>
+<div>
+    <h2> Dodaj nowe zakupy: </h2>
+    <form method="POST" action="/domowe_wydatki/">
+        {{ form.hidden_tag() }}
+        <table>
+            {% for field in form if field.widget.input_type != 'hidden' %}
+                <tr>
+                    <th>{{ field.label }} {% if field.flags.required %}*{% endif %}</th>
+                    <td>{{ field }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <input type="submit" value="Go">
+    </form>
+</div>
+</body>
+</html>
